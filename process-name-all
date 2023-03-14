@@ -1,0 +1,37 @@
+#include <iostream>
+#include <Windows.h>
+#include <Psapi.h>
+
+int main()
+{
+    // Get the array of process IDs
+    DWORD processes[1024], count;
+    if (!EnumProcesses(processes, sizeof(processes), &count)) {
+        std::cout << "Failed to enumerate processes" << std::endl;
+        return 1;
+    }
+
+    // Calculate the number of processes
+    DWORD numProcesses = count / sizeof(DWORD);
+
+    // Print the names of the processes
+    for (DWORD i = 0; i < numProcesses; i++) {
+        // Open the process
+        HANDLE process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processes[i]);
+        if (process == nullptr) {
+            continue;
+        }
+
+        // Get the process name
+        char processName[MAX_PATH] = { 0 };
+        GetModuleBaseNameA(process, nullptr, processName, sizeof(processName));
+
+        // Print the process name
+        std::cout << processName << std::endl;
+
+        // Close the process handle
+        CloseHandle(process);
+    }
+
+    return 0;
+}
