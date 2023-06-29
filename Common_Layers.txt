@@ -1,0 +1,33 @@
+Common layers
+
+Layer IP
+The IP (Internet Protocol) is a protocol that uses datagrams to communicate over a packet-switched network, such as the Internet. 
+Datagrams provide a connectionless communication service across a packet-switched network.
+The IP network service transmits datagrams between routers (intermediate nodes) using IP routers
+The most complex part of an IP router is concerned with determining the optimum link to use to reach each destination in a network. This process is known as "routing". Although the routing process is computationally intensive, it is only performed at periodic intervals.
+
+Layer UDP
+
+UDP stands for User Datagram Protocol. It is a transport layer protocol in the TCP/IP networking model. The transport layer is the fourth layer of the TCP/IP model and is responsible for the reliable and efficient delivery of data between hosts on a network.
+UDP is a connectionless protocol, which means it does not establish a dedicated connection before transmitting data. Instead, it sends data packets, called datagrams, directly to the destination without prior communication or acknowledgment. UDP is known for its simplicity and low overhead compared to the other transport layer protocol, TCP (Transmission Control Protocol).
+
+Layer SSDP
+
+The SSDP protocol can discover Plug & Play devices, with uPnP (Universal Plug and Play). SSDP uses unicast and multicast adress (239.255.255.250). SSDP is HTTP like protocol and work with NOTIFY and M-SEARCH methods.
+
+SSDP can be used over IPv4 and IPv6.
+
+
+Layer ETH
+
+What layer is Ethernet?
+Ethernet is a layer 2 data link protocol that is widely used with the TCP/IP protocol, which resides at layers 3 and 4. To understand network communications, it is essential to learn about the protocol layers (see OSI model).
+
+Layer IGMP
+
+IGMP is a network layer protocol, and only networking devices that are aware of the network layer can send and receive messages. A router operates at the network layer, while a network switch may only be aware of layer 2, also known as the data link layer.
+
+Layer MDNS
+
+What is the purpose of mDNS?
+Multicast DNS (mDNS) is a protocol aimed at helping with name resolution in smaller networks. In doing so, it takes a different approach than the well-known DNS. Instead of querying a name server, all participants in the network are directly addressed.
