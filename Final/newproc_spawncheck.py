@@ -1,16 +1,23 @@
 import sys
 import psutil
+import ctypes
 
 def bytes_to_kb(bytes_value):
     return bytes_value / 1024
 
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
 def display_new_processes():
     existing_processes = set(psutil.pids())
 
-    print("{:<8} {:<25} {:<40} {:>10} {:>10} {:<25} {:>10} {:>10}".format(
-        "PID", "Name", "Command Line", "CPU (%)", "Memory (MB)", "Connection Type", "Sent (KB)", "Recv (KB)"))
+    print("{:<8} {:<25} {:<40} {:<15} {:<20} {:>10} {:>10}".format(
+        "PID", "Name", "Command Line", "User", "Instance", "CPU (%)", "Memory (MB)"))
     print("-" * 128)
-    sys.stdout.flush()  # Flush the output to immediately display in the terminal
+    sys.stdout.flush()
 
     while True:
         current_processes = set(psutil.pids())
@@ -33,21 +40,24 @@ def display_new_processes():
             cpu_percent = process.cpu_percent(interval=0.1)
             memory_mb = process.memory_info().rss / (1024 * 1024)  # Convert bytes to MB
 
-            connections = process.connections()
-            if connections:
-                connection = connections[0]
-                conn_type = connection.type
-                sent_kb = connection.bytes_sent / 1024  # Convert bytes to KB
-                recv_kb = connection.bytes_recv / 1024  # Convert bytes to KB
-            else:
-                conn_type = "N/A"
-                sent_kb = 0
-                recv_kb = 0
+            try:
+                user = process.username()
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                user = "N/A"
+            
+            try:
+                instance = process.create_time()
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                instance = "N/A"
 
-            print("{:<8} {:<{name_len}} {:<{cmd_len}} {:>10.2f} {:>10.2f} {:<25} {:>10.2f} {:>10.2f}".format(
-                pid_str, name, cmdline, cpu_percent, memory_mb, conn_type, sent_kb, recv_kb,
+            admin_status = "Admin" if is_admin() else "Regular User"
+
+            print("{:<8} {:<{name_len}} {:<{cmd_len}} {:<15} {:<20} {:>10.2f} {:>10.2f}".format(
+                pid_str, name, cmdline, user, instance, cpu_percent, memory_mb,
                 name_len=max_name_len, cmd_len=max_cmd_len))
-            sys.stdout.flush()  # Flush the output to immediately display in the terminal
+            
+            print("Running as:", admin_status)
+            sys.stdout.flush()
 
         existing_processes = current_processes
 
