@@ -76,12 +76,21 @@ class InternetConnectionsApp:
         self.process_listbox.bind("<<ListboxSelect>>", self.update_connections_tree)
 
     def update_connections_tree(self, event):
+        # Clear existing entries in the treeview
+        self.connections_tree.delete(*self.connections_tree.get_children())
+
         selected_index = self.process_listbox.curselection()
         if selected_index:
             selected_pid = int(self.process_listbox.get(selected_index[0]).split(":")[0])
             connections_info = get_connections_by_pid(selected_pid)
             for local_address, remote_address, is_internet in connections_info:
-                self.connections_tree.insert("", tk.END, values=(local_address, remote_address, "Yes" if is_internet else "No"))
+                # Determine the text color based on internet connection status
+                text_color = "green" if is_internet else "red"
+                self.connections_tree.insert("", tk.END, values=(local_address, remote_address, "Yes" if is_internet else "No"), tags=(text_color,))
+        
+            # Apply the tag configuration to set the text color
+            self.connections_tree.tag_configure("green", foreground="green")
+            self.connections_tree.tag_configure("red", foreground="red")
 
 if __name__ == "__main__":
     root = tk.Tk()
