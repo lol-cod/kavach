@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avira Antivirus Dashboard</title>
+  <link rel="stylesheet" href="index.html">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/index.css"
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        <span class="tagline">You Are Protected</span>
+      </div>
+    </nav>
+  </header>
+  <section class="dashboard">
+    <ul class="nav-links">
+      <li class="nav-item">
+        <a href="#" class="nav-link"><div class="navs"><img src="{{ url_for('static', filename='home-button.png') }}" alt="Logo">
+        </div></a>
+        <div class="nav-hover-column">
+          <!-- Content for Home Hover Column -->
+          <a target="_blank" href="summary.html" class="nav-link">Scan Summary</a><br/>
+          <br/>
+          <a href="#" class="nav-link">History</a><br/>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link"><div class="navs"><img src="{{ url_for('static', filename='scanning.png') }}" alt="Logo">
+        </div></a>
+        <div class="nav-hover-column">
+          <!-- Content for Scan Hover Column -->
+          <a href="#" class="nav-link">Quick Scan</a><br/>
+          <br/>
+          <a href="#" class="nav-link">Full Scan</a><br/>
+        </div>
+      </li>\
+    </ul>
+  </section>
+
+  <footer>
+    <p>&copy; 2023 MAC Protection Antivirus. All rights reserved.</p>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
