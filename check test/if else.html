@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Test</title>
+    <script>
+        function showContent() {
+            var value = parseFloat(document.getElementById('inputValue').value);
+            var resultContainer = document.getElementById('resultContainer');
+
+            if (isNaN(value)) {
+                resultContainer.innerHTML = "<p>Please enter a valid number.</p>";
+            } else {
+                if (value > 2) {
+                    resultContainer.innerHTML = "<object data='dialog_red.html'></object>";
+                } else if (value === 2) {
+                    resultContainer.innerHTML = "<object data='dialog_orange.html'></object>";
+                } else if (value === 1) {
+                    resultContainer.innerHTML = "<object data='dialog_yellow.html'></object>";
+                } else {
+                    resultContainer.innerHTML = "<object data='dialog_original.html'></object>";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Check Test</h1>
+
+    <label for="inputValue">Enter a value:</label>
+    <input type="text" id="inputValue" required>
+    <button onclick="showContent()">Check Risk</button>
+
+    <div id="resultContainer"></div>
+</body>
+</html>
