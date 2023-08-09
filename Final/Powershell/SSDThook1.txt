@@ -1,0 +1,49 @@
+# Get the address of the SSDT
+$ssdtAddress = Get-SSDTAddress
+
+# Get the expected SSDT entries from a known good state
+$knownGoodSSDTEntries = Get-KnownGoodSSDTEntries
+
+# Read the SSDT entries from memory
+$currentSSDTEntries = ReadMemory($ssdtAddress, NumberOfEntries * EntrySize)
+
+# Compare the current SSDT entries with the known good state
+foreach ($entry in $currentSSDTEntries) {
+    $index = $entry.Index
+    $currentFunctionAddress = $entry.FunctionAddress
+    $knownGoodFunctionAddress = $knownGoodSSDTEntries[$index].FunctionAddress
+
+    if ($currentFunctionAddress -ne $knownGoodFunctionAddress) {
+        Write-Host "Potential SSDT hook detected at index $index!"
+        Write-Host "Current Function Address: $currentFunctionAddress"
+        Write-Host "Known Good Function Address: $knownGoodFunctionAddress"
+    }
+}
+
+# Function to get SSDT address
+function Get-SSDTAddress {
+    # Implement code to locate the SSDT address in memory
+    # This might involve reverse engineering and kernel analysis
+    return $ssdtAddress
+}
+
+# Function to retrieve known good SSDT entries
+function Get-KnownGoodSSDTEntries {
+    # Implement code to obtain known good SSDT entries
+    # This could be obtained from a clean Windows installation or trusted source
+    return $knownGoodEntries
+}
+
+# Function to read memory
+function ReadMemory {
+    param (
+        [UInt64] $address,
+        [UInt32] $size
+    )
+    # Implement code to read memory at a specific address
+    return $memoryContents
+}
+
+# Main code
+$NumberOfEntries = 100
+$EntrySize = 8  # Assuming 64-bit system
